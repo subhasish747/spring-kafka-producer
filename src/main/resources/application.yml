@@ -1,0 +1,49 @@
+
+server: 
+  port: 9000
+spring:
+   kafka:
+    template:
+      default-topic: library-events
+    properties:
+      bootstrap-servers: <bootstrap-server>:9092
+      ssl.endpoint.identification.algorithm: https
+      sasl.mechanism: PLAIN      
+      sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username=<user> password=<passcode>;
+      security.protocol: SASL_SSL
+    producer:
+        bootstrap-servers: <bootstrap-server>:9092
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.apache.kafka.common.serialization.StringSerializer 
+    admin:
+      properties:
+        bootstrap.servers: <bootstrap-server>:9092
+        
+   jmx:
+     enabled: true
+       
+logging:
+  level:
+    com:
+      sn1: INFO
+      
+      
+      
+
+
+
+        
+management:
+  endpoint:
+#     metrics:
+#        enabled: true
+     health:
+        enabled: true
+  endpoints:
+     web:
+        exposure:
+            include:
+                - "health" 
+                - "info" 
+                - "env" 
+                - "metrics"
